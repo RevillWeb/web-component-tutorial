@@ -69,7 +69,7 @@
             color: #9a7b00;
         }
     </style>
-    <div class="container green">
+    <div class="container">
         <div class="left">
             <div class="month"></div>
             <div class="day"></div>
@@ -104,12 +104,13 @@
             this.$dayLong = this.shadowRoot.querySelector('.day-long');
             this.$time = this.shadowRoot.querySelector('.time');
 
+            this.updateTheme(this.getAttribute('theme'));
+
             //Call the draw function initially
             this.draw();
-            var that = this;
             //Call the draw function every section to update the time
             setInterval(function(){
-                that.draw();
+                this.draw();
             }, 1000);
 
         };
@@ -128,13 +129,19 @@
 
         };
 
+        proto.updateTheme = function(theme) {
+            var val = "green";
+            if (["green", "red", "blue", "gold"].indexOf(theme) > -1) {
+                val = theme;
+            }
+            this.$container.className = "container " + val;
+        };
+
         //When the options are updated, re-populate the select
         proto.attributeChangedCallback = function(attrName, oldVal, newVal) {
             switch (attrName) {
                 case "theme":
-                    if (["green", "red", "blue", "gold"].indexOf(newVal) > -1) {
-                        this.$container.className = "container " + newVal;
-                    }
+                    this.updateTheme(newVal);
                     break;
             }
         };
