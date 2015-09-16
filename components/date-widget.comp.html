@@ -108,9 +108,10 @@
 
             //Call the draw function initially
             this.draw();
+            var that = this;
             //Call the draw function every section to update the time
             setInterval(function(){
-                this.draw();
+                that.draw();
             }, 1000);
 
         };
